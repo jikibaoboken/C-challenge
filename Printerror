@@ -1,0 +1,30 @@
+void testequal(std::string ans, std::string sol) {
+    Assert::That(ans, Equals(sol));
+}
+void dotest(std::string s, std::string expected)
+{
+    testequal(Printer::printerError(s), expected);
+}
+Describe(printerError_Tests)
+{
+    It(Fixed__Tests)
+    {
+        std::string s = "aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz";
+        dotest(s, "3/56");
+        s = "kkkwwwaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz";
+        dotest(s, "6/60");
+        s = "kkkwwwaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyzuuuuu";
+        dotest(s, "11/65");
+    }
+};
+
+
+
+class Printer
+{
+public:
+    static std::string printerError(const std::string &s)
+    {
+      return std::to_string(count_if(s.begin(), s.end(), [](char c){ return c>'m';})) + "/" + std::to_string(s.size());
+    }
+};
